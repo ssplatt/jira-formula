@@ -1,10 +1,6 @@
-jira-formula
-=============
-
-installs and configures a jira server. Jira uses an internal Tomcat server, so there are some files and settings for running HTTPS or non https. Tomcat can also be configured to run behind a proxy (i.e. nginx).
-
-Defaults:
-```
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
 jira:
   enabled: False
   hostname: localhost
@@ -13,6 +9,10 @@ jira:
   jvm_max_mem: 768m
   jvm_support_recommended_args: ""
   required_pkgs: []
+  java:
+    managed: false
+    pkg: openjdk-8-jre-headless
+    fromrepo: jessie-backports
   tomcat:
     https: False
     proxy: False
@@ -30,7 +30,7 @@ jira:
     hostname: 'localhost'
     password: 'jira'
     dbname: 'jira'
-    connector_url: http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.43.tar.gz
+    connector_url: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.43.tar.gz
     connector_dir: mysql-connector-java-5.1.43
     connector_hash: md5=695d1a0745ef38fa82cd3059b1db4497
     connector_jar: mysql-connector-java-5.1.43-bin.jar
@@ -40,25 +40,3 @@ jira:
     name: jira
     enable: False
     state: dead
-```
-
-Typical Config:
-```
-jira:
-  enabled: true
-  hostname: server
-  jvm_min_mem: 1024m
-  jvm_max_mem: 4096m
-  jvm_support_recommended_args: -Dhttp.proxyHost=proxy.example.org -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy.example.org -Dhttps.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|*.atlassian.com
-  service:
-    enable: True
-    state: running
-  required_pkgs:
-    - 'mariadb-client'
-    - 'mariadb-server'
-    - 'python-mysqldb'
-  mysql:
-    managed: true
-  web:
-    sessiontimeout: 600
-```

@@ -1,0 +1,14 @@
+{%- from "jira/map.jinja" import jira with context -%}
+[Unit]
+Description=JIRA Issue Tracker
+After=network.target
+
+[Service]
+Type=forking
+User=jira
+PIDFile={{ jira.install_dir }}/work/catalina.pid
+ExecStart={{ jira.install_dir }}/bin/start-jira.sh
+ExecStop={{ jira.install_dir }}/bin/stop-jira.sh
+
+[Install]
+WantedBy=multi-user.target

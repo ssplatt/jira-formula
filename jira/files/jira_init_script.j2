@@ -1,0 +1,43 @@
+{%- from "jira/map.jinja" import jira with context -%}
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:		jira
+# Required-Start: $local_fs
+# Required-Stop:
+# Default-Start:	2 3 4 5
+# Default-Stop:
+# Short-Description:	JIRA issue tracker
+### END INIT INFO
+
+# JIRA Linux service controller script
+NAME="jira"
+cd {{ jira.install_dir }}
+
+case "$1" in
+    start)
+        ./start-jira.sh
+        ;;
+    stop)
+        ./stop-jira.sh
+        ;;
+    restart|reload)
+        ./stop-jira.sh
+        ./start-jira.sh
+        ;;
+    status)
+        PID="$(ps aux | grep ${NAME} | grep -v grep | awk '{print $2}')"
+        if [ -n "${PID}" ] ; then
+          echo "${NAME} is running. pid: ${PID}"
+          exit 0
+        else
+          echo "${NAME} is not running"
+          exit 1
+        fi
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+
+exit 0

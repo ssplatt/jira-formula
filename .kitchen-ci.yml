@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+driver:
+  name: linode
+
+provisioner:
+  name: salt_solo
+  formula: jira
+  state_top:
+    base:
+      "*":
+        - jira
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - jira
+
+platforms:
+  - name: debian_jessie
+    driver:
+      flavor: 2048
+
+suites:
+  - name: default
+    provisioner:
+      pillars:
+        jira.sls:
+          jira:
+            enabled: true
+
+  - name: custom
+    provisioner:
+      pillars-from-files:
+        jira.sls: pillar-custom.sls

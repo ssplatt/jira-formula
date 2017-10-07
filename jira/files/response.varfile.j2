@@ -1,0 +1,8 @@
+{%- from "jira/map.jinja" import jira with context -%}
+executeLauncherAction$Boolean=false
+app.install.service$Boolean=false
+sys.confirmedUpdateInstallationString=false
+launch.application$Boolean=false
+existingInstallationDir=/usr/local/JIRA
+sys.languageId=en
+sys.installationDir={{ jira.install_dir }}

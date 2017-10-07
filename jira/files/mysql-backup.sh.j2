@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# rotate and backup the jira mysql db
+#
+
+# first, rotate the old backup out of the way and clean up old backups
+/usr/sbin/logrotate -f /etc/logrotate.d/mysql-backup
+
+# run the backup
+mysqldump --defaults-file=/etc/mysql/debian.cnf jira > /mnt/mysqlbackups/mysql-jira.sql
